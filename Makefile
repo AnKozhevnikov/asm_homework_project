@@ -15,8 +15,17 @@ CC += -m32 -no-pie -fno-pie
 LDLIBS = -lm
 
 .PHONY: all
-
 all: integral
 
-integral: integral.c
-	$(CC) $(CFLAGS) -o $@ $< $(LDLIBS)
+.PHONY: clean
+clean:
+	$(RM) *.o
+
+integral: integral.o list.o
+	$(CC) $(CFLAGS) $^ -o $@ $(LDLIBS)
+
+integral.o: integral.c
+	$(CC) $(CFLAGS) $< -c $@ $(LDLIBS)
+
+list.o: list.asm
+	nasm -f elf32 $< -o $@
