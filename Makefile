@@ -21,10 +21,15 @@ all: integral
 clean:
 	$(RM) *.o
 
-integral: integral.o list.o
+test: test.o solvers.o
 	$(CC) $(CFLAGS) $^ -o $@ $(LDLIBS)
+	#./test
 
-integral.o: integral.c
+integral: integral.o list.o solvers.o
+	$(CC) $(CFLAGS) $^ -o $@ $(LDLIBS)
+	./integral
+
+%.o: %.c
 	$(CC) $(CFLAGS) $< -c $@ $(LDLIBS)
 
 list.o: list.asm
