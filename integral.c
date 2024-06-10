@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <unistd.h>
+#include <getopt.h>
 
 typedef double afunc(double);
 
@@ -66,8 +68,74 @@ double solve(afunc *f1, afunc *f2, afunc *f3, double eps1, double eps2) {
 }
 
 int main(int argc, char* argv[]) {
-   double ans = solve(f1, f2, f3, eps1, eps2);
-   printf("%lf\n", ans);
+   if (argc == 1) {
+      double ans = solve(f1, f2, f3, eps1, eps2);
+      printf("Area: %lf\n", ans);
+   }
+   else {
+      int c;
+      while (1) {
+         int option_index = 0;
+         static struct option long_options[] = 
+         {
+            {"help", no_argument, 0, 'h'},
+            {"root", no_argument, 0, 'r'},
+            {"iterations", no_argument, 0, 'i'},
+            {"test-root", required_argument, 0,  'R'},
+            {"test-integral", required_argument, 0, 'I'},
+            {0, 0, 0, 0}
+         };
+         c = getopt_long(argc, argv, "-:hriR:I:", long_options, &option_index);
+
+         if (c==-1) break;
+
+         switch (c) {
+            case 'h':
+               printf("Options:\n");
+               printf(" --help, -h:                print this help\n");
+               printf(" --root, -r:                print the roots of the functions\n");
+               printf(" --iterations, -i:          print the number of iterations\n");
+               printf(" --test-root, -R <arg>:     test the root function with argument like F1:F2:A:B:E:R\n");
+               printf(" --test-integral, -I <arg>: test the integral function with argument like F:A:B:E:R\n");
+               printf("Running with no options will print the area\n");
+               break;
+            case 'r':
+               printf("Roots:\n");
+               printf("f1 and f2: %lf\n", root(f1, f2, 0.01, 10, eps1, 0));
+               printf("f2 and f3: %lf\n", root(f2, f3, 0.01, 10, eps1, 0));
+               printf("f1 and f3: %lf\n", root(f1, f3, 0.01, 10, eps1, 0));
+               break;
+            case 'i':
+               int iter1, iter2, iter3;
+               root(f1, f2, 0.01, 10, eps1, &iter1);
+               root(f2, f3, 0.01, 10, eps1, &iter2);
+               root(f1, f3, 0.01, 10, eps1, &iter3);
+               printf("Iterations:\n");
+               printf("f1 and f2: %d\n", iter1);
+               printf("f2 and f3: %d\n", iter2);
+               printf("f1 and f3: %d\n", iter3);
+               break;
+            case 'R':
+               //TODO: finish this
+               break;
+            case 'I':
+               //TODO: finish this
+               break;
+            case '?':
+               printf("unknown option %c\n", optopt);
+               break;
+            case 1:
+               printf("unknown argument: %s\n", optarg);
+               break;
+            case ':':
+               printf("option %c needs a value\n", optopt);
+               break;
+            default:
+               printf("?? getopt returned character code 0%o ??\n", c);
+               break;
+         }
+      }
+   }
 
    return 0;
 }
