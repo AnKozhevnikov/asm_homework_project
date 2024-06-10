@@ -106,7 +106,9 @@ int main(int argc, char* argv[]) {
                printf("f1 and f3: %lf\n", root(f1, f3, 0.01, 10, eps1, 0));
                break;
             case 'i':
-               int iter1, iter2, iter3;
+               int iter1 = 0;
+               int iter2 = 0;
+               int iter3 = 0;
                root(f1, f2, 0.01, 10, eps1, &iter1);
                root(f2, f3, 0.01, 10, eps1, &iter2);
                root(f1, f3, 0.01, 10, eps1, &iter3);
