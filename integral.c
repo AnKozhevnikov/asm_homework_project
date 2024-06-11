@@ -34,6 +34,7 @@ int compare(const void *a, const void *b) {
 }
 
 double solve(afunc *f1, afunc *f2, afunc *f3, double eps1, double eps2) {
+   //find all roots and pairs of functions belonged to them
    double x1 = root(f1, f2, 0.01, 10, eps1, 0);
    double x2 = root(f2, f3, 0.01, 10, eps1, 0);
    double x3 = root(f1, f3, 0.01, 10, eps1, 0);
@@ -41,8 +42,11 @@ double solve(afunc *f1, afunc *f2, afunc *f3, double eps1, double eps2) {
    struct Point p2={x2, f2, f3};
    struct Point p3={x3, f1, f3};
    struct Point points[3]={p1, p2, p3};
+   //sort the points by x
    qsort(points, 3, sizeof(struct Point), compare);
 
+   //the algorithm of finding the area of the figure, is that we fix two functions, connected to the most left point,
+   //find to the second point, look at the functions connected to it, and switch one of fixed functions
    double area = 0;
    afunc *l1 = points[0].f1;
    afunc *l2 = points[0].f2;

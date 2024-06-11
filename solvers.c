@@ -7,6 +7,7 @@ typedef double afunc(double);
 double root(afunc *f, afunc *g, double a, double b, double eps, int *counter);
 double integral(afunc *f, double a, double b, double eps);
 
+//finding the root of right and left part of the equation by the method of chords
 double root(afunc *f, afunc *g, double a, double b, double eps, int *counter) {
    if (counter!=NULL) (*counter)++;
    double c=(a*(f(b)-g(b))-b*(f(a)-g(a)))/((f(b)-g(b))-(f(a)-g(a)));
@@ -27,6 +28,7 @@ double root(afunc *f, afunc *g, double a, double b, double eps, int *counter) {
    }
 }
 
+//finding the integral by the method of Simpson
 double integral(afunc *f, double a, double b, double eps) {
    int n = 2;
    double h = (b-a)/n;
