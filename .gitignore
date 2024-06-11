@@ -1,2 +1,4 @@
 integral
+test
 *.o
+.vscode

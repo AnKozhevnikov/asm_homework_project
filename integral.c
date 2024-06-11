@@ -3,6 +3,7 @@
 #include <math.h>
 #include <unistd.h>
 #include <getopt.h>
+#include <string.h>
 
 typedef double afunc(double);
 
@@ -73,6 +74,7 @@ int main(int argc, char* argv[]) {
       printf("Area: %lf\n", ans);
    }
    else {
+      afunc* func_array[] = {f1, f2, f3};
       int c;
       while (1) {
          int option_index = 0;
@@ -118,10 +120,34 @@ int main(int argc, char* argv[]) {
                printf("f1 and f3: %d\n", iter3);
                break;
             case 'R':
-               //TODO: finish this
+               char *a = strtok(optarg, ":");
+               int num1 = atoi(a);
+               a = strtok(NULL, ":");
+               int num2 = atoi(a);
+               a = strtok(NULL, ":");
+               double A = atof(a);
+               a = strtok(NULL, ":");
+               double B = atof(a);
+               a = strtok(NULL, ":");
+               double E = atof(a);
+               a = strtok(NULL, ":");
+               double R = atof(a);
+               double ans = root(func_array[num1-1], func_array[num2-1], A, B, E, 0);
+               printf("%lf %lf %lf", ans, fabs(R-ans), fabs(R-ans)/R);
                break;
             case 'I':
-               //TODO: finish this
+               a = strtok(optarg, ":");
+               int num = atoi(a);
+               a = strtok(NULL, ":");
+               A = atof(a);
+               a = strtok(NULL, ":");
+               B = atof(a);
+               a = strtok(NULL, ":");
+               E = atof(a);
+               a = strtok(NULL, ":");
+               R = atof(a);
+               ans = integral(func_array[num-1], A, B, E);
+               printf("%lf %lf %lf", ans, fabs(R-ans), fabs(R-ans)/R);
                break;
             case '?':
                printf("unknown option %c\n", optopt);
