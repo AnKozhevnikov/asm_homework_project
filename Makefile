@@ -23,6 +23,7 @@ clean:
 
 test: test.o solvers.o
 	$(CC) $(CFLAGS) $^ -o $@ $(LDLIBS)
+	./test
 
 integral: integral.o list.o solvers.o
 	$(CC) $(CFLAGS) $^ -o $@ $(LDLIBS)

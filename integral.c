@@ -28,7 +28,7 @@ int compare(const void *a, const void *b);
 
 int compare(const void *a, const void *b) {
    double x = ((struct Point*)a)->x - ((struct Point*)b)->x;
-   if (x < 1e-6) return 0;
+   if (fabs(x) < 1e-6) return 0;
    else if (x>0) return 1;
    else return -1;
 }
