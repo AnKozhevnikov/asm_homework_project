@@ -24,8 +24,6 @@ extern double integral(afunc *f, double a, double b, double eps2);
 double solve(afunc *f1, afunc *f2, afunc *f3, double eps1, double eps2);
 int compare(const void *a, const void *b);
 
-
-
 int compare(const void *a, const void *b) {
    double x = ((struct Point*)a)->x - ((struct Point*)b)->x;
    if (fabs(x) < 1e-6) return 0;
