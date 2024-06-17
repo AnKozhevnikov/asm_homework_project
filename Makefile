@@ -21,9 +21,12 @@ all: integral
 clean:
 	$(RM) *.o
 
-test: test.o solvers.o
-	$(CC) $(CFLAGS) $^ -o $@ $(LDLIBS)
-	./test
+testbin: test.o solvers.o
+	$(CC) $(CFLAGS) $^ -o testbin $(LDLIBS)
+
+.PHONY: test
+test: testbin
+	./testbin
 
 integral: integral.o list.o solvers.o
 	$(CC) $(CFLAGS) $^ -o $@ $(LDLIBS)
